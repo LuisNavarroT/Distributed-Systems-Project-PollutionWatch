@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+// Options for the GRPC
+option java_multiple_files = true;
+option java_package = "grpc.service3";
+option java_outer_classname = "AreaStatusControlImpl";
+
+package PollutionWatch;
+
+// Service Definition
+
+service AreaStatusControl{
+	rpc riverHistoric(riverDataRequest) returns (stream riverDataResponse){}
+	rpc BidiRiver(stream waterStatusRequest) returns (stream waterStatusResponse){}
+	rpc BidiNeighbourhood(stream neighborhoodStatusRequest) returns (stream neighborhoodStatusResponse){}
+ }
+
+ // Define the messages for riverHistoric method
+ //(Server streaming)The client sends one river's name, and the server
+ // answers with the information of the last 10 days.
+ message riverDataRequest {
+  string riverDataReq = 1;
+}
+
+message riverDataResponse {
+  string riverDataRes = 1;
+}
+
+ // Define the messages for BidiRiver method
+ //(Bidirectional) The client sends 2 river names
+ // The server will answer with data from this two rivers.
+ message waterStatusRequest {
+  string waterStatusReq = 1;
+}
+
+message waterStatusResponse {
+  string waterStatusRes = 1;
+}
+
+ // Define the messages for BidiNeighbourhood method
+ //(Bidirectional) The client sends 2 neighborhood names
+ // The server will answer with data from this two neighborhood.
+ message neighborhoodStatusRequest {
+  string neighborhoodStatusReq = 1;
+}
+
+message neighborhoodStatusResponse {
+  string neighborhoodStatusRes = 1;
+}

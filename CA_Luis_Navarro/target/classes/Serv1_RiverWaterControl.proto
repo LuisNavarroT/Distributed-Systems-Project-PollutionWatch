@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+// Options for the GRPC
+option java_multiple_files = true;
+option java_package = "grpc.service1";
+option java_outer_classname = "RiverWaterControlImpl";
+
+package PollutionWatch;
+
+// Service Definition
+
+service RiverWaterControl{
+	rpc oxigenLevel(testRequest) returns (testResponse){}
+	rpc manyValues(stream deepTestRequest) returns (deepTestResponse){}
+	rpc manyReadings(stream riverDataRequest) returns (riverDataResponse){}
+ }
+
+ // Define the messages for oxigenLevel method
+ //(Unary)The client sends one float oxygen level value and the server answers with a string.
+ message testRequest {
+  float testReq = 1;
+}
+
+message testResponse {
+  string testRes = 1;
+}
+
+ // Define the messages for manyValues method
+ //(Client Streaming) The client sends 3 values taken from a river (oxygen, temperature and ph)
+ // The server will check this values and answer with the quality of the water.
+ message deepTestRequest {
+  float deepTestReqOxy = 1;
+  float deepTestReqTemp = 2;
+  float deepTestReqPh = 3;
+ }
+
+message deepTestResponse {
+  string deepTestRes = 1;
+}
+
+ // Define the messages for manyReadings method
+ //(Client Streaming) The client sends the name of a river and 3 readings(oxygen, temperature and ph)
+ // The server will save this data and answer a confirmation.
+ message riverDataRequest {
+  string riverDataReq = 1;
+  float riverDataReqOxy = 2;
+  float riverDataReqTemp = 3;
+  float riverDataReqPh = 4;
+}
+
+message riverDataResponse {
+  string riverDataRes = 1;
+}
+

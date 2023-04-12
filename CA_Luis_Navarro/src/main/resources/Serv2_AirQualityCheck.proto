@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+// Options for the GRPC
+option java_multiple_files = true;
+option java_package = "grpc.service2";
+option java_outer_classname = "AirQualityCheckImpl";
+
+package PollutionWatch;
+
+// Service Definition
+
+service AirQualityCheck{
+	rpc neighbourhoodName(statusRequest) returns (statusResponse){}
+	rpc BidiOxygen(stream airOxygenRequest) returns (stream airOxygenResponse){}
+	rpc manyAirReadings(stream airDataRequest) returns (airDataResponse){}
+ }
+
+ // Define the messages for neighbourhoodName method
+ //(Unary)The client sends one neighbourhood's name, and the server
+ // answers with the quality of the air in that place.
+ message statusRequest {
+  string statusReq = 1;
+}
+
+message statusResponse {
+  string statusRes = 1;
+}
+
+ // Define the messages for BidiOxygen method
+ //(Bidirectional) The client sends 2 values (water height before and after in a 50cm3 burette)
+ // The server will calculate the percentage oxygen, send it and also send if it is healthy or not.
+ message airOxygenRequest {
+  float airOxygenReqBef = 1;
+  float airOxygenReqAft = 2;
+}
+
+message airOxygenResponse {
+  float airOxygenResPer = 1;
+  string airOxygenResHea = 2;
+}
+
+ // Define the messages for manyAirReadings method
+ //(Client Streaming) The client sends a carbon monoxide value and a ground level ozone reading
+ // the server compares them to the healthy values that the air sample should have and return a single answer.
+ message airDataRequest {
+  float airDataReqMon = 1;
+  float airDataReqOz = 2;
+}
+
+message airDataResponse {
+  string airDataRes = 1;
+}
