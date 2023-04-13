@@ -12,6 +12,7 @@ public class RiverWaterControlServer extends RiverWaterControlImplBase{
 	
 	public static void main(String[] args) {
 		RiverWaterControlServer serv1Riverserver = new RiverWaterControlServer();
+		
 		int port = 50051;
 		
 		Server server;
@@ -37,7 +38,7 @@ public class RiverWaterControlServer extends RiverWaterControlImplBase{
 			value1 = "UNHEALTHY";
 		}
 		
-		testResponse response = testResponse.newBuilder().setTestRes("The status of the water is: "+ value1).build();
+		testResponse response = testResponse.newBuilder().setTestRes("--- RPC 1 --- \nThe status of the water is: "+ value1).build();
 		responseObserver.onNext( response ); 
 		responseObserver.onCompleted();
 	}

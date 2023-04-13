@@ -10,7 +10,9 @@ grpc\service2\statusResponse$1.class
 grpc\service2\airOxygenResponseOrBuilder.class
 grpc\service1\testRequest$1.class
 grpc\service1\testResponse.class
+grpc\service1\RiverWaterControlCient.class
 grpc\service1\testRequest$Builder.class
+grpc\service1\RiverWaterControlServer$1.class
 grpc\service1\deepTestRequest$1.class
 grpc\service1\riverDataRequestOrBuilder.class
 grpc\service1\testRequestOrBuilder.class
@@ -32,6 +34,7 @@ grpc\service3\riverDataRequestOrBuilder.class
 grpc\service2\AirQualityCheckGrpc$AirQualityCheckFutureStub.class
 grpc\service3\riverDataResponse.class
 grpc\service1\RiverWaterControlGrpc$RiverWaterControlMethodDescriptorSupplier.class
+grpc\service1\RiverWaterControlCient$1.class
 grpc\service1\riverDataResponse$Builder.class
 grpc\service1\testResponse$Builder.class
 grpc\service1\riverDataRequest$1.class
@@ -53,6 +56,7 @@ grpc\service3\waterStatusResponse$Builder.class
 grpc\service2\statusRequestOrBuilder.class
 grpc\service3\riverDataResponseOrBuilder.class
 grpc\service1\riverDataResponseOrBuilder.class
+grpc\service1\RiverWaterControlCient$2.class
 grpc\service3\riverDataRequest$Builder.class
 grpc\service3\riverDataResponse$1.class
 grpc\service1\riverDataResponse.class
@@ -72,6 +76,7 @@ grpc\service1\deepTestResponse.class
 grpc\service3\AreaStatusControlGrpc$AreaStatusControlStub.class
 grpc\service2\AirQualityCheckGrpc$AirQualityCheckFileDescriptorSupplier.class
 grpc\service2\AirQualityCheckGrpc$1.class
+grpc\service1\RiverWaterControlServer$2.class
 grpc\service2\AirQualityCheckGrpc$AirQualityCheckStub.class
 grpc\service2\airOxygenRequest$1.class
 grpc\service3\AreaStatusControlGrpc$AreaStatusControlMethodDescriptorSupplier.class
@@ -91,6 +96,7 @@ grpc\service2\airOxygenRequest.class
 grpc\service3\neighborhoodStatusRequest.class
 grpc\service3\AreaStatusControlImpl.class
 grpc\service1\deepTestResponse$1.class
+grpc\service1\RiverWaterControlServer.class
 grpc\service3\riverDataResponse$Builder.class
 grpc\service3\neighborhoodStatusResponse$Builder.class
 grpc\service3\waterStatusRequestOrBuilder.class

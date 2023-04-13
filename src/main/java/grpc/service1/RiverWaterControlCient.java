@@ -52,7 +52,7 @@ public class RiverWaterControlCient {
 			@Override
 			public void onNext(deepTestResponse value) {
 				// TODO Auto-generated method stub
-				System.out.println("The status of the deep water test is: " + value.getDeepTestRes());
+				System.out.println("--- RPC 2 --- \nThe status of the deep water test is: " + value.getDeepTestRes());
 				
 			}
 
@@ -73,11 +73,11 @@ public class RiverWaterControlCient {
 		
 		StreamObserver<deepTestRequest> deepResponse = asyncStub.manyValues(deepReply);
 		try {
-			deepTestRequest request = deepTestRequest.newBuilder().setDeepTestReqOxy(7).setDeepTestReqTemp(25).setDeepTestReqPh(7).build();
+			deepTestRequest request = deepTestRequest.newBuilder().setDeepTestReqOxy(7).setDeepTestReqTemp(25).setDeepTestReqPh(70).build();
 			deepResponse.onNext(request);
 	        Thread.sleep(500);
 	        deepResponse.onCompleted();
-	        Thread.sleep(10000);
+	        Thread.sleep(3000);
 	    } catch (RuntimeException | InterruptedException e) {
 	        e.printStackTrace();
 	    }
@@ -86,7 +86,38 @@ public class RiverWaterControlCient {
 	
 	public static void manyReadings() {
 		// TODO Auto-generated method stub
-		
+		StreamObserver<riverDataResponse> riverReply = new StreamObserver<riverDataResponse>() {
+
+			@Override
+			public void onNext(riverDataResponse value) {
+				// TODO Auto-generated method stub
+				System.out.println("--- RPC 3 --- \nStoring data... " + value.getRiverDataRes());
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				// TODO Auto-generated method stub
+				t.printStackTrace();
+				
+			}
+
+			@Override
+			public void onCompleted() {
+				// TODO Auto-generated method stub
+				System.out.println("River info storing ended");
+			}
+			
+		};
+		StreamObserver<riverDataRequest> riverResponse = asyncStub.manyReadings(riverReply);
+		try {
+			riverDataRequest request = riverDataRequest.newBuilder().setRiverDataReq("Lifey").setRiverDataReqOxy(10).setRiverDataReqTemp(30).setRiverDataReqPh(9).build();
+			riverResponse.onNext(request);
+	        Thread.sleep(500);
+	        riverResponse.onCompleted();
+	        Thread.sleep(10000);
+	    } catch (RuntimeException | InterruptedException e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 }
