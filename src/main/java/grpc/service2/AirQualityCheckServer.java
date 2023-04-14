@@ -1,13 +1,18 @@
 package grpc.service2;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
+import grpc.examples.bidirectionstreamstrings.StringRequest;
+import grpc.examples.bidirectionstreamstrings.StringResponse;
+import grpc.examples.bidirectionstreamstrings.StringServer;
 import grpc.service2.AirQualityCheckGrpc.AirQualityCheckImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
 public class AirQualityCheckServer extends AirQualityCheckImplBase {
+	private static final Logger logger = Logger.getLogger(StringServer.class.getName());
 	public static void main(String[] args) {
 		AirQualityCheckServer serv2Airserver = new AirQualityCheckServer();
 		int port = 50052;
@@ -57,7 +62,64 @@ public class AirQualityCheckServer extends AirQualityCheckImplBase {
 	@Override
 	public StreamObserver<airOxygenRequest> bidiOxygen(StreamObserver<airOxygenResponse> responseObserver) {
 		// TODO Auto-generated method stub
-		return super.bidiOxygen(responseObserver);
+		//return super.bidiOxygen(responseObserver);
+		return new StreamObserver<airOxygenRequest>() {
+
+			@Override
+			public void onNext(airOxygenRequest value) {
+				// TODO Auto-generated method stub
+				// In bidirectional stream, both server and  client would be sending the stream of messages.
+				// Here, for each message in stream from client, server is sending back one response.
+				// To calculate if the oxygen is healthy or not we use the next equation:
+				// % O2 in air = (change in height of water in the burette/initial volume of air in the burette) x 100
+						    
+
+					StringBuilder value1 = new StringBuilder(); 
+					float bef;
+					float aft;
+					float change;
+					float initial;
+					float calculation;
+					String message = "";
+					
+					bef = value.getAirOxygenReqBef();
+					aft = value.getAirOxygenReqAft();
+					change = bef-aft;
+					initial = 50-bef;
+					calculation = (change/initial)*100;
+					if(calculation<=23.5 && calculation>=19.5) {
+				        message = "is HEALTHY with a oxigen pergentage of" ;  
+					}else {
+						message = "is UNHEALTHY with a oxigen pergentage of" ;  
+					}
+					
+					
+					value1.append((calculation)); 
+					float value1AsFloat = Float.parseFloat(value1.toString());
+					value1 = value1.reverse();
+					// Preparing and sending the reply for the client. Here, response is build and with the value (input1.toString()) computed by above logic.
+					airOxygenResponse response = airOxygenResponse.newBuilder().setAirOxygenResHea(message).setAirOxygenResPer(value1AsFloat).build();        					
+				
+		            responseObserver.onNext(response);
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				// TODO Auto-generated method stub
+				//Log the error
+				System.err.println("Error in BidiOxygen: " + t.getMessage());
+	            // Send an error response to the client
+	            responseObserver.onError(t);
+			}
+
+			@Override
+			public void onCompleted() {
+				// TODO Auto-generated method 
+				responseObserver.onCompleted();
+				
+			}
+		
+		};
 		
 	}
 
