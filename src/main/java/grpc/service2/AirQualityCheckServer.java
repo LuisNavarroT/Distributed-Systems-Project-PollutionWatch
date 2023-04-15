@@ -87,10 +87,10 @@ public class AirQualityCheckServer extends AirQualityCheckImplBase {
 					change = bef-aft;
 					initial = 50-bef;
 					calculation = (change/initial)*100;
-					if(calculation<=23.5 && calculation>=19.5) {
-				        message = "is HEALTHY with a oxigen pergentage of" ;  
+					if(calculation<=23.55 && calculation>=19.5) {
+				        message = "HEALTHY for humans" ;  
 					}else {
-						message = "is UNHEALTHY with a oxigen pergentage of" ;  
+						message = "UNHEALTHY for humans" ;  
 					}
 					
 					
@@ -160,7 +160,7 @@ public class AirQualityCheckServer extends AirQualityCheckImplBase {
 			@Override
 			public void onCompleted() {
 				// TODO Auto-generated method stub
-			    String message = "Acording to the test " + value2[0];
+			    String message = "Calculating... " + value2[0];
 			    airDataResponse response = airDataResponse.newBuilder().setAirDataRes(message).build();
 			    responseObserver.onNext(response);
 			    responseObserver.onCompleted();
