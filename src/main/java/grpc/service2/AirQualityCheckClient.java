@@ -98,7 +98,7 @@ public class AirQualityCheckClient {
 		}
 
 	}
-	private static void manyAirReadings() {
+	public static void manyAirReadings() {
 		// TODO Auto-generated method stub
 		StreamObserver<airDataResponse> airReply = new StreamObserver<airDataResponse>() {
 
