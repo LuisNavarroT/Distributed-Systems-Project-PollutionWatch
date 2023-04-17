@@ -41,6 +41,11 @@
 			<version>1.3.2</version>
 		</dependency>
 		<dependency>
+			<groupId>javax.jmdns</groupId>
+			<artifactId>jmdns</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+		<dependency>
 			<groupId>grpc.examples.strings</groupId>
 			<artifactId>StringGRPCClient</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
