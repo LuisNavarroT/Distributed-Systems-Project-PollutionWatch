@@ -27,7 +27,7 @@ public class AreaStatusControlServer extends AreaStatusControlImplBase {
 		Properties prop = serv3Areaserver.getProperties();
 		serv3Areaserver.registerService(prop);
 
-		int port = Integer.valueOf(prop.getProperty("service_port"));// #.50051;
+		int port = Integer.valueOf(prop.getProperty("service_port"));// #.50053;
 		Server server;
 		//
 		try {
@@ -67,11 +67,11 @@ public class AreaStatusControlServer extends AreaStatusControlImplBase {
 			// Create a JmDNS instance
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 
-			String service_type = prop.getProperty("service_type");// "_http._tcp.local.";
-			String service_name = prop.getProperty("service_name");// "service1";
+			String service_type = prop.getProperty("service_type");// "_GRPCServ3._tcp.local.";
+			String service_name = prop.getProperty("service_name");// "Area status control";
 			int service_port = Integer.valueOf(prop.getProperty("service_port"));// #.50053;
 
-			String service_description_properties = prop.getProperty("service_description");// "path=index.html";
+			String service_description_properties = prop.getProperty("service_description");// "Description"
 
 			// Registration service information
 			ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port,

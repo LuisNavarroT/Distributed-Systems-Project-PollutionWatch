@@ -69,11 +69,11 @@ public class AirQualityCheckServer extends AirQualityCheckImplBase {
 			// Create a JmDNS instance
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 
-			String service_type = prop.getProperty("service_type");// "_http._tcp.local.";
-			String service_name = prop.getProperty("service_name");// "service1";
+			String service_type = prop.getProperty("service_type");// "_GRPCServ2._tcp.local.";
+			String service_name = prop.getProperty("service_name");// "Air Quality Control";
 			int service_port = Integer.valueOf(prop.getProperty("service_port"));// #.50052;
 
-			String service_description_properties = prop.getProperty("service_description");// "path=index.html";
+			String service_description_properties = prop.getProperty("service_description");//description
 
 			// Registration service information
 			ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port,

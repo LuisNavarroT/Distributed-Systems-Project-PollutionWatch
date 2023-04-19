@@ -1,6 +1,12 @@
 package grpc.service1;
 
+import java.net.InetAddress;
 import java.util.concurrent.TimeUnit;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 
 import grpc.service1.RiverWaterControlGrpc.RiverWaterControlBlockingStub;
 import grpc.service1.RiverWaterControlGrpc.RiverWaterControlStub;
@@ -13,10 +19,14 @@ import io.grpc.stub.StreamObserver;
 public class RiverWaterControlCient {
 	private static RiverWaterControlBlockingStub blockingstub;
 	private static RiverWaterControlStub asyncStub;
+	static String host= "_GRPCServ1._tcp.local.";//"localhost";
+	static int port; //= 50051;
+	static String resolvedIP;
+	
 	public static void main(String[] args) {
-		String host="localhost";
-		int port = 50051;
-		ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+		
+		testClientJMDNS();
+		ManagedChannel channel = ManagedChannelBuilder.forAddress(resolvedIP, port).usePlaintext().build();
 		blockingstub = RiverWaterControlGrpc.newBlockingStub(channel);
 		asyncStub = RiverWaterControlGrpc.newStub(channel);
 		
@@ -33,6 +43,41 @@ public class RiverWaterControlCient {
 
 	}
 	
+	private static void testClientJMDNS() {
+		// TODO Auto-generated method stub
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			// Add a service listener
+			jmdns.addServiceListener(host, new SampleListener());
+
+			// Wait a bit
+            Thread.sleep(20000);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private static class SampleListener implements ServiceListener {
+		public void serviceAdded(ServiceEvent event) {
+			System.out.println("Service added: " + event.getInfo());
+		}
+		public void serviceRemoved(ServiceEvent event) {
+			System.out.println("Service removed: " + event.getInfo());
+		}
+		@SuppressWarnings("deprecation")
+		public void serviceResolved(ServiceEvent event) {
+					System.out.println("Service resolved: " + event.getInfo());
+			
+                    ServiceInfo info = event.getInfo();
+                    port = info.getPort();
+                    resolvedIP = info.getHostAddress();                    
+                    System.out.println("IP Resolved - " + resolvedIP + ":" + port);
+		}
+	}
+
 	public static void oxigenLevel() {
 		// TODO Auto-generated method stub
 		try {
