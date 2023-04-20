@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
-import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
 import grpc.service3.AreaStatusControlGrpc.AreaStatusControlBlockingStub;
@@ -20,14 +19,15 @@ import io.grpc.stub.StreamObserver;
 public class AreaStatusControlClient {
 	private static AreaStatusControlBlockingStub blockingstub;
 	private static AreaStatusControlStub asyncStub;
-	static String host= "_GRPCServ3._tcp.local.";//"localhost";
-	static int port; // 50053;
-	static String resolvedIP;
+	//static String host= "_GRPCServ3._tcp.local.";//"localhost";
+	//static int port; // 50053;
+	//static String resolvedIP;
 	
 	public static void main(String[] args) {
-		
-		testClientJMDNS();
-		ManagedChannel channel = ManagedChannelBuilder.forAddress(resolvedIP, port).usePlaintext().build();
+		int port= 50053;
+		String host= "localhost";
+		//testClientJMDNS();
+		ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
 		blockingstub = AreaStatusControlGrpc.newBlockingStub(channel);
 		asyncStub = AreaStatusControlGrpc.newStub(channel);
 		
@@ -41,10 +41,23 @@ public class AreaStatusControlClient {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			// Add a service listener
+			jmdns.addServiceListener("_GRPCServ3._tcp.local.", new SampleListener());
+
+			// Wait a bit
+            Thread.sleep(20000);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 	
-
+/*
 	private static void testClientJMDNS() {
 		// TODO Auto-generated method stub
 		try {
@@ -52,7 +65,7 @@ public class AreaStatusControlClient {
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 
 			// Add a service listener
-			jmdns.addServiceListener(host, new SampleListener());
+			jmdns.addServiceListener("_GRPCServ3._tcp.local.", new SampleListener());
 
 			// Wait a bit
             Thread.sleep(20000);
@@ -61,7 +74,7 @@ public class AreaStatusControlClient {
 			System.out.println(e.getMessage());
 		}
 		
-	}
+	}*/
 	private static class SampleListener implements ServiceListener {
 		public void serviceAdded(ServiceEvent event) {
 			System.out.println("Service added: " + event.getInfo());
@@ -73,10 +86,10 @@ public class AreaStatusControlClient {
 		public void serviceResolved(ServiceEvent event) {
 					System.out.println("Service resolved: " + event.getInfo());
 			
-                    ServiceInfo info = event.getInfo();
+                   /* ServiceInfo info = event.getInfo();
                     port = info.getPort();
                     resolvedIP = info.getHostAddress();                    
-                    System.out.println("IP Resolved - " + resolvedIP + ":" + port);
+                    System.out.println("IP Resolved - " + resolvedIP + ":" + port);*/
 		}
 	}
 

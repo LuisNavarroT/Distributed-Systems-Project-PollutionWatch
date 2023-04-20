@@ -10,8 +10,6 @@ import java.util.logging.Logger;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 
-import grpc.examples.bidirectionstreamstrings.StringRequest;
-import grpc.examples.bidirectionstreamstrings.StringResponse;
 import grpc.examples.bidirectionstreamstrings.StringServer;
 import grpc.service2.AirQualityCheckGrpc.AirQualityCheckImplBase;
 import io.grpc.Server;
